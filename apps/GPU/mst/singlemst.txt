@@ -1,0 +1,112 @@
+struct node{
+int lock;
+Point set;
+Point src;
+Point dst;
+int weight;
+};
+int hchanged,<GPU>changed;
+void reset(Point <GPU> p, Graph <GPU> graph,Set set[Point(graph)]){
+p.minppty.weight=99999999;
+p.minedge=99999999;
+p.minppty.set=99999999;
+p.minppty.lock=0;
+}
+void minset(Point <GPU> p, Graph <GPU> graph,Set  set[Point(graph)]){
+int ch;
+Point (graph)  t1;
+Point (graph)  t2;
+foreach(t In p.outnbrs){
+t1=set.find(p);
+t2=set.find(t);
+if(t1!=t2){
+MIN(t1.minppty.weight,graph.getweight(p,t),ch);//find minimum edge out going from t1
+MIN(t2.minppty.weight,graph.getweight(p,t),ch);//find minimum edge out going from t2. edge is taken undirected
+}
+}
+}
+
+void Minedge(Point <GPU> p,Graph<GPU>graph,Set set[Point(graph)]){
+Point(graph) t1;
+Point(graph) t2;
+int t3;
+Edge (graph) e;
+foreach(t In p.outnbrs){
+t1=set.find(p);
+t2=set.find(t);
+t3=graph.getweight(p,t);
+if(t1!=t2){
+if( t3==t1.minppty.weight){
+single(t1.minppty.lock){
+e=graph.getedge(p,t);
+e.mark=1;////add edge to mst
+t1.minppty.src=p;
+t1.minppty.dst=t;
+t1.minppty.weight=t3;
+t1.minppty.set=t2;
+}
+}
+if(t3==t2.minppty.weight){
+single(t2.minppty.lock){
+e=graph.getedge(p,t);
+e.mark=1;//add edge to mst
+t2.minppty.src=p;
+t2.minppty.dst=t;
+t2.minppty.weight=t3;
+t2.minppty.set=t1;
+}
+}
+}
+}
+}
+void mstunion(Point <GPU> p,Graph<GPU>graph,Set set[Point(graph)]){
+Point (graph)t1;
+Point (graph)t2;
+int t3,t4;
+t1=set.find(p);
+t2=t1.minppty.set;
+t3=t1.minppty.lock;
+t4=t2.minppty.lock;
+if(t1!=t2 && t3==1){
+set.Union(t1,t2);
+changed=1;
+}
+}
+initmark(Edge <GPU> e, Graph<GPU> graph){
+e.mark=999999999;
+}
+int main(int argc,char *argv[]){
+if(argc!=2){
+printf("error:- exec filename");
+return 1;
+}
+Graph hgraph;
+hgraph.addPointProperty(minppty,struct node);
+hgraph.addEdgeProperty(mark,int);
+hgraph.addPointProperty(minedge,int);
+hgraph.getType() <GPU> graph;
+hgraph.read(argv[1]);
+Set hset[Point(hgraph)];
+Set set[Point(graph)];
+graph=hgraph;
+set=hset;
+hchanged=0;
+double rt1=rtclock();
+foreach(t In graph.edges)initmark(t,graph);
+while(1){
+changed=0;
+foreach(t In graph.points)reset(t,graph,set);
+foreach(t In graph.points)minset(t,graph,set);
+foreach(t In graph.points)Minedge(t,graph,set);
+foreach(t In graph.points)mstunion(t,graph,set);
+if(changed==0)break;
+}
+double rt2=rtclock();
+printf("TIME =%f \n", (rt2-rt1)*1000);
+hgraph.mark=graph.mark;
+unsigned long int  mst=0;
+if(graph.edges.mark==1)mst ReduxSum=graph.edges.weight;
+
+printf("\nmst cost=%lu\n",mst);
+}
+

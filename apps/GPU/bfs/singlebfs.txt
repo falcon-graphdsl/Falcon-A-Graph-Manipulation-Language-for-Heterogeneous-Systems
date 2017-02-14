@@ -1,0 +1,29 @@
+int <GPU> changed=0,hchanged; 
+void reset (Point <GPU> t, Graph <GPU> graph){
+t.dist=1234567890;
+}
+void BFS(Point <GPU> p,Graph <GPU> graph){
+int ch;
+foreach(t In p.outnbrs){
+MIN(t.dist,p.dist+1,changed);
+}
+}
+int main(int argc, char *name[]){
+Graph hgraph;
+hgraph.addPointProperty(dist,int);
+hgraph.read(name[1]);
+hgraph.getType() <GPU> graph;
+graph=hgraph;
+foreach(t In graph.points)reset(t,graph);
+graph.points[0].dist=0;
+while(1){
+changed=0;
+foreach(t In graph.points)BFS(t,graph);
+hchanged=changed;
+if(hchanged==0)break;
+}
+hgraph.dist=graph.dist;
+for(int i=0;i<hgraph.npoints;i++)printf("%d\n",hgraph.points[i].dist);
+return;
+}
+//lonestar gpu has 140 lines

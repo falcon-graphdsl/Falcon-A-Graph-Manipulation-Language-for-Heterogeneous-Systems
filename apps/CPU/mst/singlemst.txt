@@ -1,0 +1,107 @@
+struct node{
+int lock;
+Point set;
+Point src;
+Point dst;
+int weight;
+};
+int hchanged, changed;
+void reset(Point   p, Graph   graph,Set set[Point(graph)]){
+p.minppty.weight=99999999;
+p.minedge=99999999;
+p.minppty.set=99999999;
+p.minppty.lock=0;
+}
+void minset(Point   p, Graph   graph,Set  set[Point(graph)]){
+int ch;
+Point (graph)  t1;
+Point (graph)  t2;
+foreach(t In p.outnbrs){
+t1=set.find(p);
+t2=set.find(t);
+if(t1!=t2){
+MIN(t1.minppty.weight,graph.getweight(p,t),ch);//find minimum edge out going from t1
+MIN(t2.minppty.weight,graph.getweight(p,t),ch);//find minimum edge out going from t2. edge is taken undirected
+}
+}
+}
+
+void Minedge(Point   p,Graph graph,Set set[Point(graph)]){
+Point(graph) t1;
+Point(graph) t2;
+int t3;
+Edge (graph) e;
+foreach(t In p.outnbrs){
+t1=set.find(p);
+t2=set.find(t);
+t3=graph.getweight(p,t);
+if(t1!=t2){
+if( t3==t1.minppty.weight){
+single(t1.minppty.lock){
+e=graph.getedge(p,t);
+e.mark=t3;////add edge to mst
+t1.minppty.src=p;
+t1.minppty.dst=t;
+t1.minppty.weight=t3;
+t1.minppty.set=t2;
+}
+}
+if(t3==t2.minppty.weight){
+single(t2.minppty.lock){
+e=graph.getedge(p,t);
+e.mark=t3;//add edge to mst
+t2.minppty.src=p;
+t2.minppty.dst=t;
+t2.minppty.weight=t3;
+t2.minppty.set=t1;
+}
+}
+}
+}
+}
+void mstunion(Point   p,Graph graph,Set set[Point(graph)]){
+Point (graph)t1;
+Point (graph)t2;
+int t3,t4;
+t1=set.find(p);
+t2=t1.minppty.set;
+t3=t1.minppty.lock;
+t4=t2.minppty.lock;
+if(t1!=t2 && t3==1){
+set.Union(t1,t2);
+changed=1;
+}
+}
+initmark(Edge   e, Graph  graph){
+e.mark=0;
+}
+int main(int argc,char *argv[]){
+if(argc!=4){
+printf("exec -t threads filename");
+return 1;
+}
+Graph graph;
+graph.addPointProperty(minppty,struct node);
+graph.addPointProperty(minedge,int);
+graph.addEdgeProperty(mark,int);
+graph.read(argv[3]);
+Set set[Point(graph)];
+hchanged=0;
+foreach(t In graph.edges)initmark(t,graph);
+while(1){
+changed=0;
+foreach(t In graph.points)reset(t,graph,set);
+foreach(t In graph.points)minset(t,graph,set);
+foreach(t In graph.points)Minedge(t,graph,set);
+foreach(t In graph.points)mstunion(t,graph,set);
+if(changed==0)break;
+}
+
+unsigned long int  mst=0;
+for(int i=0;i<graph.nedges;i++){
+if(graph.edges[i].mark)mst=mst+graph.edges[i].mark;
+}
+
+printf("mst cost=%lu",mst);
+}
+

@@ -1,0 +1,14 @@
+-----------
+Falcon: A Domain-Specific Language for Writing Graph Algorithms for Heterogeneous Architectures
+
+Copyright (C) 2016, Compiler Design Lab, Indian Institute of Science, Bangalore, 560012, India. All rights reserved.
+
+This software can be used without charge for research, academic or experimental use.
+If this software is used for experimental purpose cite the paper
+
+Unnikrishnan Cheramangalath, Rupesh Nasre, and Y. N. Srikant. 2015. Falcon: A Graph Manipulation Language for Heterogeneous Systems. ACM Trans. Archit. Code Optim. 12, 4, Article 54 (December 2015), 27 pages. DOI: https://doi.org/10.1145/2842618
+
+ For all the other uses, contact the copyright holder (email: unni_c@csa.iisc.ernet.in).
+
+A Distributed Version of above compiler will be released soon.
+------------

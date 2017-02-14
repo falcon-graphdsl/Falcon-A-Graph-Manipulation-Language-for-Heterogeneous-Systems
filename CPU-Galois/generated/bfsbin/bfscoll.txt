@@ -1,0 +1,41 @@
+Graph hgraph;
+struct node{
+Point(hgraph)  n1;
+int w;
+};
+Collection pred[struct node];
+relaxEdge(Point p,Graph hgraph,Point p1,int weight,Collection pred[struct node]){
+int changed=0;
+int ddata=hgraph.points[p].dist;
+int newdist=hgraph.points[p1].dist+weight;
+//int newdist=p1.dist+weight;
+while(newdist < (olddist=hgraph.points[p].dist)){
+MIN(hgraph.points[p].dist,newdist,changed);
+struct node tt1;
+tt1.w=newdist;
+tt1.n1=p;
+pred.add(tt1);
+}
+}
+relaxNode1(struct node req,Graph hgraph,Collection  pred[struct node]){
+Point (hgraph) p1;
+struct node temp;
+temp=req;
+p1=temp.n1;
+foreach(t In p1.outnbrs){
+int weight=1;
+relaxEdge(t,hgraph,p1,weight,pred);}
+}
+int main(int argc,char *argv[]){
+hgraph.addPointProperty(dist,int);
+Point (hgraph) p;
+hgraph.read(argv[3]);
+foreach(t In hgraph.points)t.dist=1234567890;
+p=hgraph.points[0];
+hgraph.points[p].dist=0;
+foreach(t In p.outnbrs){
+int weight=1;
+relaxEdge(t,hgraph,p,weight,pred);
+}
+foreach(t In pred)relaxNode1(t,hgraph,pred);
+}

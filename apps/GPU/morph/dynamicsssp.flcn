@@ -1,0 +1,84 @@
+int  <GPU>changed=0, hchanged=0;
+void processincrementation(char *name,Graph hgraph){
+FILE *fp1;
+fp1=fopen(name,"r");
+int src,dst,weight;
+int i=0;
+while(fscanf(fp1,"%d%d%d",&src,&dst,&weight)!=EOF){
+hgraph.addEdge(src,dst,weight);
+hgraph.points[src].updated=true;
+i++;
+}
+}
+
+relaxgraph( Point <GPU>   p,Graph <GPU>  graph){
+p.updated=false;
+foreach(t In p.outnbrs)      
+  MIN(t.dist,p.dist+graph.getweight(t,p),changed);
+}
+
+ reset( Point <GPU>   t,Graph <GPU>  graph){
+t.dist=1234567890;
+t.olddist=1234567890;
+t.updated=false;
+}
+ reset1( Point <GPU>   t,Graph <GPU>  graph){
+if(t.dist<t.olddist)t.updated=true;
+t.olddist=t.dist;
+}
+
+void SSSP(char *name,char *name1) {
+	Graph  hgraph;
+hgraph.addPointProperty(dist,int);
+hgraph.addPointProperty(updated,bool);
+hgraph.getType() <GPU> graph;
+graph.addPointProperty(olddist,int);
+	hgraph.read(name);
+graph=hgraph;
+double t1,t2;
+t1=rtclock();
+	foreach(t In graph.points)reset(t,graph);
+	graph.points[0].updated=true;
+	graph.points[0].dist=0;
+	while(1){ 
+	changed=0;
+	foreach(t In graph.points)(t.updated==true)relaxgraph(t,graph);
+	if(changed==0) break; 
+       foreach(t In graph.points)reset1(t,graph);
+}
+hgraph.dist=graph.dist;
+t2=rtclock();
+printf("\nTIME =%f",(t2-t1)*1000);
+int maxdist=0;
+for(int i=0;i<hgraph.npoints;i++){
+if(maxdist <hgraph.points[i].dist)
+maxdist=hgraph.points[i].dist;
+}
+printf("\nMAXDIST=%d\n",maxdist);
+processincrementation(name1,hgraph);
+graph.updated=hgraph.updated;
+graph=hgraph;
+	while(1){ 
+	changed=0;
+	foreach(t In graph.points)(t.updated==true)relaxgraph(t,graph);
+	if(changed==0) break; 
+       foreach(t In graph.points)reset1(t,graph);
+}
+hgraph.dist=graph.dist;
+maxdist=0;
+for(int i=0;i<hgraph.npoints;i++){
+if(maxdist <hgraph.points[i].dist)
+maxdist=hgraph.points[i].dist;
+}
+
+
+printf("\nMAXDIST=%d\n",maxdist);
+return;
+}
+int  main(int argc,char *argv[]){
+if(argc!=3){
+printf("error:-exec   file1 file2");
+return 1;
+}
+SSSP(argv[1],argv[2]);
+}

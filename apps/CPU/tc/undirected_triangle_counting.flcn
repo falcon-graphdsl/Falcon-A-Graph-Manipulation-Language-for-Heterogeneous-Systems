@@ -1,0 +1,44 @@
+int  changed=0,hchanged; 
+void TC(Point  p,Graph  graph){
+Collection coll [Point(graph)];
+foreach(t In p.outnbrs){
+Point (graph) t1;
+t1=t;
+if(t1.x <=p.x)continue;
+coll.add(t1);
+}
+for(int i=0;i<coll.size;i++){
+Point (graph) p2;
+p2=coll[i];
+foreach(t2 In p2.outnbrs){
+Point (graph) t1;
+t1=t2;
+if(t1.x <=p2.x)continue;
+for(int i=0;i<coll.size;i++){
+Point (graph) p3;
+p3=coll[i];
+if(p3.x==t1.x)ADD(changed,1);
+}
+}
+}
+coll.size=0;
+}
+int main(int argc, char *argv[]){
+if(argc!=4){
+printf("error: exec -t threads filename");
+return 1;
+}
+Graph hgraph;
+hgraph.addPointProperty(dist,int);
+hgraph.read(argv[3]);
+double t1,t2;
+t1=rtclock();
+changed=0;
+foreach(t In hgraph.points)TC(t,hgraph);
+t2=rtclock();
+printf("\nTIME =%f\n",(t2-t1)*1000);
+int count;
+count=changed;
+printf("\ntriangles=%d \n",count);
+return 1;
+}

@@ -1,0 +1,58 @@
+int <GPU>changed=0,<GPU>coll1cnt=0,<GPU>coll2cnt=0,hchanged;
+ relaxgraph(Point <GPU> p,Graph <GPU> graph, Collection coll1[Point(graph)] ,Collection coll2[Point(graph)] , int val){
+foreach( t In p.outnbrs){
+if(t.dist> (val+1)){
+t.dist=val+1;
+coll2.add(t);
+changed=1;
+}
+}
+}
+reset(Point <GPU> t, Graph <GPU> graph){
+t.dist=1234567890;
+}
+
+SSSP(char *name){
+Graph hgraph;
+hgraph.addPointProperty(dist,int);
+hgraph.getType() <GPU> graph;
+int xx=0,temp=0;
+hgraph.read(name);
+graph=hgraph;
+Collection coll1[Point(graph)],coll2[Point(graph)],coll3[Point(graph)];
+graph.points[0].dist=0;
+hgraph.points[0].dist=0;
+double rt1=rtclock();
+foreach(t In graph.points)reset(t,graph);
+coll1.add(hgraph.points[0]);
+foreach(t In coll1)relaxgraph(t,graph,coll1,coll2,xx);
+while(1){
+changed=0;
+coll3=coll1;
+coll1=coll2;
+coll2=coll3;
+temp=coll2.size;
+coll1.size=temp;
+ temp=0;
+coll2.size=temp;
+xx++;
+foreach(t In coll1.items)relaxgraph(t,graph,coll1,coll2,xx);
+if(changed==0)break;
+}
+double rt2=rtclock();
+printf(" TIME %f \n",(rt2-rt1)*1000);
+int maxdist=0;
+hgraph.dist=graph.dist;
+for(int i=0;i<hgraph.npoints;i++){
+if(maxdist <hgraph.points[i].dist)
+maxdist=hgraph.points[i].dist;
+}
+printf("\nMAXDIST=%d\n",maxdist);
+}
+int main(int argc, char *argv[]){
+if(argc!=2){
+printf("exec inputgraph\n");
+return 1;
+}
+SSSP(argv[1]);
+}

@@ -1,0 +1,212 @@
+
+ #include "ssspcoll_dynamic.h"
+HGraph  hgraph ;
+
+ 
+
+ Galois::InsertBag<struct node>  pred ; 
+
+
+ void   processincrementation ( char    *  name ) 
+ {
+
+ fopen(name,"r");
+
+
+  int   src , dst , weight ;
+
+
+  int   i =0;
+
+
+ 
+ while(fscanf(fp1,"%d%d%d",&src,&dst,&weight)!=EOF)  { 
+
+ i++; 
+
+ hgraph.addEdge( src,dst,weight); 
+
+ //empty
+pred.push(src); 
+
+ //empty
+pred.push(dst); 
+
+ }
+
+ }
+template<typename Pusher0 >
+void   relaxEdge ( int & p ,HGraph & hgraph ,int & p1 ,int   weight ,Pusher0 &pred ) 
+ {
+
+  int   changed =0;
+
+
+  int   ddata =((struct struct_hgraph  *)(hgraph.extra))->dist[p];
+
+
+  int   newdist =((struct struct_hgraph  *)(hgraph.extra))->dist[p1]+weight;
+
+
+ 
+ while(newdist<(((struct struct_hgraph  *)(hgraph.extra))->dist[p]))  { 
+
+ HMIN(&(((struct struct_hgraph  *)(hgraph.extra))->dist[p]),newdist,changed);
+
+
+   struct node   tt1 ;
+
+
+ tt1.w=newdist; 
+
+ tt1.n1=p; 
+
+ //empty
+pred.push(tt1); 
+
+ }
+
+ }
+template<typename Pusher0 >
+void   relaxNode1 ( struct node  req ,HGraph & hgraph ,Pusher0 &pred ) 
+ {
+
+ int p1;
+
+   struct node   temp ;
+
+
+ temp=req; 
+
+ p1=temp.n1; 
+
+ int falcft0=hgraph.index[p1+1]-hgraph.index[p1];
+int falcft1=hgraph.index[p1];
+for(int falcft2=0;falcft2<falcft0;falcft2++){
+int ut0=2*(falcft1+falcft2);
+ int ut1=hgraph.edges[ut0].ipe;
+int ut2=hgraph.edges[ut0+1].ipe;
+int t=ut1;
+ int   weight =ut2;
+
+
+ relaxEdge(ut1,hgraph,p1,weight,pred);
+
+ }
+
+ }
+  struct nodeIndexer:public std::unary_function<struct node,unsigned int> {
+ unsigned int operator()(const struct node &val)const {
+ unsigned int t=val.w/1024;
+ return t;
+}
+};
+using namespace Galois::WorkList;
+ typedef dChunkedFIFO<64> Chunk;
+ typedef OrderedByIntegerMetric<struct nodeIndexer,Chunk,10> OBIM;
+
+struct Process1 {
+ Process1(){}
+template <typename Pusher > 
+void operator()(struct node &req,Pusher &pred ){
+  relaxNode1(req,hgraph,pred);
+}
+};
+
+struct Process2 {
+ Process2(){}
+template <typename Pusher > 
+void operator()(struct node &req,Pusher &pred ){
+  relaxNode1(req,hgraph,pred);
+}
+};
+
+void falctfun0(int &id,HGraph &hgraph){
+  if (id < hgraph.npoints) {
+ ((struct struct_hgraph  *)(hgraph.extra))->dist[id]=1234567890;
+}
+}
+ int   main ( int   argc ,char    *  argv [ ] ) 
+ { LonestarStart(argc,argv,name,desc,url);
+if(argc>2)FALC_THREADS=atoi(argv[2]);
+
+ 
+
+ int p;
+
+ if( argc<4  )
+{
+
+ printf("exec -t theads input");
+
+
+ return 1;
+
+ }
+
+ hgraph.readMorph(argv[3]);
+
+int hosthgraph=0;
+alloc_extra_hgraph(hgraph,hosthgraph,hgraph.npoints);
+; 
+
+ 
+ 
+
+ #pragma omp parallel for   num_threads(FALC_THREADS)
+for(int id=0;id<hgraph.npoints;id++)falctfun0( id,hgraph);
+
+ p=0; 
+
+ ((struct struct_hgraph  *)(hgraph.extra))->dist[p]=0; 
+
+ int falcft3=hgraph.index[p+1]-hgraph.index[p];
+int falcft4=hgraph.index[p];
+for(int falcft5=0;falcft5<falcft3;falcft5++){
+int ut3=2*(falcft4+falcft5);
+ int ut4=hgraph.edges[ut3].ipe;
+int ut5=hgraph.edges[ut3+1].ipe;
+int t=ut4;
+ int   weight =ut5;
+
+
+ relaxEdge(ut4,hgraph,p,weight,pred);
+
+
+ }
+
+ 
+ Galois::for_each_local(pred,Process1(),Galois::wl<OBIM>());
+
+
+  int   maxdist =0;
+
+
+ for (int   i =0;i<hgraph.npoints;i++) {
+
+ if( ((struct struct_hgraph  *)(hgraph.extra))->dist[i]>maxdist  )
+maxdist=((struct struct_hgraph  *)(hgraph.extra))->dist[i]; 
+
+ }
+
+ processincrementation(argv[4]);
+
+
+ 
+ Galois::for_each_local(pred,Process2(),Galois::wl<OBIM>());
+
+
+  int   maxdist =0;
+
+
+ for (int   i =0;i<hgraph.npoints;i++) {
+
+ if( ((struct struct_hgraph  *)(hgraph.extra))->dist[i]>maxdist  )
+maxdist=((struct struct_hgraph  *)(hgraph.extra))->dist[i]; 
+
+ }
+
+ printf("MAX DIST=%d \n",maxdist);
+
+
+ }

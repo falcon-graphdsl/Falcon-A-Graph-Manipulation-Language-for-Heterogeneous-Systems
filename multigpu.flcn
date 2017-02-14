@@ -1,0 +1,60 @@
+int <GPU> changed=0;                                                                                                                                                                                         
+void BFS(Point <GPU> p,Graph <GPU> graph){
+foreach(t In p.outnbrs){
+MIN(t.dist,p.dist+1,graph.changed[0]);
+}
+}
+relaxgraph( Point <GPU> p,Graph <GPU> graph){
+foreach(t In p.outnbrs)
+{
+MIN(t.dist,p.dist+graph.getweight(p,t),graph.changed[0]);
+}
+}
+SSSPBFS(char *name) {
+Graph hgraph;
+hgraph.addPointProperty(dist,int);
+hgraph.addProperty(changed,int);
+hgraph.getType() <GPU> graph;
+hgraph.getType() <GPU> graph1;
+hgraph.addPointProperty(dist1,int);
+hgraph.read(name);
+graph=hgraph;
+graph1=hgraph;
+foreach(t In graph.points)t.dist=1234567890;
+foreach(t In graph1.points)t.dist=1234567890;
+graph.points[0].dist=0;
+graph1.points[0].dist=0;
+parallel sections {
+section {
+while(1){
+graph1.changed[0]=0;
+foreach(t In graph1.points)BFS(t,graph1);
+if(graph1.changed[0]==0) break;
+}
+}
+section {
+while(1){
+graph.changed[0]=0;
+foreach(t In graph.points)relaxgraph(t,graph);
+if(graph.changed[0]==0) break;
+}
+}
+}
+hgraph.dist=graph.dist;//sssp dist
+hgraph.dist1=graph1.dist;//bfs dist
+int maxdist1=0,maxdist=0;
+for(int i=0;i<hgraph.npoints;i++){
+if(maxdist <hgraph.points[i].dist)
+maxdist=hgraph.points[i].dist;
+}
+for(int i=0;i<hgraph.npoints;i++){
+if(maxdist1 <hgraph.points[i].dist1)
+maxdist1=hgraph.points[i].dist1;
+}
+printf("distances %d %d",maxdist1,maxdist);
+return;
+}
+int main(int argc,char *argv[]){
+SSSPBFS(argv[1]);
+}                                                                                                                                                                                                            
+   

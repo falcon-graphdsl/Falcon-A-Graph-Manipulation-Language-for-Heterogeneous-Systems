@@ -1,0 +1,45 @@
+int   changed=0,hchanged; 
+int lev=0;
+void reset (Point   t, Graph   graph){
+t.dist=1234567890;
+}
+void BFS(Point   p,Graph   graph,int lev){
+int ch;
+foreach(t In p.outnbrs){
+if(t.dist>(p.dist+1)){
+t.dist=p.dist+1;
+changed=1;
+}
+}
+}
+int main(int argc, char *argv[]){
+if(argc!=4){
+printf("exec -t threads file");
+return 1;
+
+}
+Graph graph;
+graph.addPointProperty(dist,int);
+graph.read(argv[3]);
+double t1,t2;
+t1=rtclock();
+foreach(t In graph.points)reset(t,graph);
+graph.points[0].dist=0;
+while(1){
+changed=0;
+foreach(t In graph.points)(t.dist==lev)BFS(t,graph,lev);
+if(changed==0)break;
+lev++;
+}
+t2=rtclock();
+printf("\nTIME =%f\n",(t2-t1)*1000);
+graph.dist=graph.dist;
+int maxdist=0;
+for(int i=0;i<graph.npoints;i++){
+if(maxdist <graph.points[i].dist)
+maxdist=graph.points[i].dist;
+}
+printf("\nMAXDIST=%d \n",maxdist);
+return;
+}
+//lonestar gpu has 140 lines

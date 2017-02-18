@@ -1,3 +1,5 @@
+This work is part of the ACM TACO publication Falcon: A Graph Manipulation Language for Heterogeneous Systems ( http://dl.acm.org/citation.cfm?id=2842618).
+Above code can be used freely for any academic research works. If you are using the code please cite the above paper.
 
 ROOT FOLDER = ./
 Set the GALOIS_ROOT to appropriate directory in your machine. (modifiy the CPU-Galois/comm.mk file)
@@ -6,7 +8,7 @@ Do a make from ROOT DIRECTORY.
 dsl codes in apps folder will be compiled to C++/CUDA code and written in CPU/GPU/CPU-Galois folders under ROOT FOLDER.
 then these codes will be compiled to binaries and written to bin folder under ROOT FOLDER.
 
-input graph should be in .gr format. convertion of edgelist to .gr can be done with code unde folder utility.
+input graph can  be in binary .gr or edglist format. convertion of edgelist to .gr can be done with code unde folder utility.
 edgelist format has following syntax with edges sorted in ascending order of src vertex.
 npoints nedges (line 0)
 src dst weight (line 1 to nedges)
@@ -22,4 +24,7 @@ known issues
 
 1) type checking is not perfect.
 2) mst code of CPU-Galois do not print mst-cost,computed cost is correct.
-3)  CPU mst needs graph to be in symmetric format
+3) CPU mst needs graph to be in symmetric format
+
+Who do I talk to?
+Repo owner or admin - unni_c@csa.iisc.ernet.in

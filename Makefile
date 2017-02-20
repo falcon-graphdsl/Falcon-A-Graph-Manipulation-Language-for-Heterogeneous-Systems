@@ -7,7 +7,7 @@ APPSALLGEN=ssspbin bfsbin mstbin ccbin
 CUDACODES=tc 
 CUDACODESGEN=tcbin 
 MORPHCODES=morph
-all:  $(MYPROGRAM) $(APPSALL)   $(MORPHCODES) $(APPSALLGEN) $(CUDACODES)
+all:  $(MYPROGRAM) $(APPSALL)   $(MORPHCODES) $(APPSALLGEN) $(CUDACODES) $(CUDACODESGEN)
 $(MORPHCODES):
 	make -C apps/GPU/$@
 	make -C GPU/generated/$@

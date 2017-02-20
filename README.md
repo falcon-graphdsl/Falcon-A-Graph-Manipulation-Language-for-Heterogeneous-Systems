@@ -22,7 +22,7 @@ For dynamic sssp addition of edges should be given as a text file. input graph s
 For DMR algorithm the inputs and node files and pre-processed nbrs(three neighbours of each triangle) files.
 if command line argument to dmr is r25k , inputs expected by algorithm are r25k.node,r25k.ele,r25.poly,r25k.nbr
 
-**Requirments**
+**Requirements**
 1)gcc-4.8
 2)cuda compiler and nvidia GPU with compute capability 2.0 or higher. If you have GPU with compute capability higher than 2.0, makefile can be modified to compiler with corresposing archictechure
 3)Galois framework from ISS  group, UT-Austin, if dsl code which uses global worklist are used.

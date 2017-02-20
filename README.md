@@ -27,3 +27,5 @@ if command line argument to dmr is r25k , inputs expected by algorithm are r25k.
 Who do I talk to?
 
 Repo owner or admin - unni_c@csa.iisc.ernet.in
+
+**A Distributed memory Version of Falcon using MPI will be released soon.**

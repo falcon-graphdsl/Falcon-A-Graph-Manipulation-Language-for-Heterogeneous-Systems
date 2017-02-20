@@ -1,1 +1,0 @@
-int FALC_THREADS;

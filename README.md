@@ -23,6 +23,7 @@ For DMR algorithm the inputs and node files and pre-processed nbrs(three neighbo
 if command line argument to dmr is r25k , inputs expected by algorithm are r25k.node,r25k.ele,r25.poly,r25k.nbr
 
 **Requirements**
+
 1)gcc-4.8
 
 2)cuda compiler and nvidia GPU with compute capability 2.0 or higher. If you have GPU with compute capability higher than 2.0, makefile can be modified to compiler with corresposing archictechure

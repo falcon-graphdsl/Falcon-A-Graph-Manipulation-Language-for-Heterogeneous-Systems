@@ -19,7 +19,7 @@ This work is part of the ACM TACO publication Falcon: A Graph Manipulation Langu
 Above code can be used freely for any academic research works. If you are using the code please cite the above paper.
 
 ROOT FOLDER = ./
-Set the GALOIS_ROOT to appropriate directory in your machine. (modifiy the CPU-Galois/comm.mk file)
+Set the GALOIS_ROOT to appropriate directory in your machine. (modify the CPU-Galois/comm.mk file)
 If Galois is not installed, comment the Make of Galois-codes in MakeFile in ROOT DIRECTORY.
 Do a make from ROOT DIRECTORY.
 dsl codes in apps folder will be compiled to C++/CUDA code and written in CPU/GPU/CPU-Galois folders under ROOT FOLDER.
@@ -40,26 +40,6 @@ if command line argument to dmr is r25k , inputs expected by algorithm are r25k.
 1)gcc-4.8
 2)cuda compiler and nvidia GPU with compute capability 2.0 or higher. If you have GPU with compute capability higher than 2.0, makefile can be modified to compiler with corresposing archictechure
 3)Galois framework from ISS  group, UT-Austin, if dsl code which uses global worklist are used.
-
-
-Who do I talk to?
-
-Repo owner or admin - unni_c@csa.iisc.ernet.in
-
-**A Distributed memory Version of Falcon using MPI will be released soon.**
-dges sorted in ascending order of src vertex.
-npoints nedges (line 0)
-src dst weight (line 1 to nedges)
-
-Morph algorithm
-For dynamic sssp addition of edges should be given as a text file. input graph should be in .gr format.
-
-For DMR algorithm the inputs and node files and preprocessed nbrs files.
-if command line argument to dmr is r25k , inputs expected by algorithm are r25k.node,r25k.ele,r25.poly,r25k.nbr
-
-**Requirments**
-gcc-4.8
-cuda compiler and nvidia GPU with compute capability 2.0 or higher. If you have GPU with compute capability higher than 2.0, makefile can be modified to compiler with corresposing archictechure
 
 
 Who do I talk to?

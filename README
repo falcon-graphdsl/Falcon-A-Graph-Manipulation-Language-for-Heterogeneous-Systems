@@ -32,7 +32,8 @@ Who do I talk to?
 
 Repo owner or admin - unni_c@csa.iisc.ernet.in
 
-**A Distributed memory Version of Falcon using MPI will be released soon.**
+**A Distributed memory Version of Falcon using MPI will be released soon. This is part of the work accepted in IEEE Cluster 2017,
+titled "Unnikrishnan Cheramangalath, Rupesh Nasre and Y N Srikant. DH-Falcon: A language for large-scale graph processing on Distributed Heterogeneous systems. " **
 
 known issues
 

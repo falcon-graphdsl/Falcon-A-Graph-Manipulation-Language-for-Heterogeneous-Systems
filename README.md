@@ -1,10 +1,10 @@
 Welcome to the A-Heterogeneous-DSL-for-CPU-and-GPU wiki!
 
-This work is part of the ACM TACO publication Falcon: A Graph Manipulation Language for Heterogeneous Systems ( http://dl.acm.org/citation.cfm?id=2842618).
+This work is part of the ACM TACO publication Falcon: A Graph Manipulation Language for Heterogeneous Systems ( http://dl.acm.org/citation.cfm?id=2842618). This code can be used freely for any academic research works. If you are using the code please cite the above paper.
+
 
 A distributed version of Falcon which runs on distributed heterogeneous systems will be released soon. This work is
 accepted in IEEE CLUSTER 2017 title "Unnikrishnan Cheramangalath, Rupesh Nasre and Y N Srikant. DH-Falcon: A language for large-scale graph processing on Distributed Heterogeneous systems."
-Above code can be used freely for any academic research works. If you are using the code please cite the above paper.
 
 ROOT FOLDER = ./
 Set the GALOIS_ROOT to appropriate directory in your machine. (modify the CPU-Galois/common.mk file)

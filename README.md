@@ -4,7 +4,7 @@ This work is part of the ACM TACO publication Falcon: A Graph Manipulation Langu
 
 
 A distributed version of Falcon which runs on distributed heterogeneous systems will be released soon. This work is
-accepted in IEEE CLUSTER 2017 title "Unnikrishnan Cheramangalath, Rupesh Nasre and Y N Srikant. DH-Falcon: A language for large-scale graph processing on Distributed Heterogeneous systems."
+accepted in IEEE CLUSTER 2017 titled "Unnikrishnan Cheramangalath, Rupesh Nasre and Y N Srikant. DH-Falcon: A language for large-scale graph processing on Distributed Heterogeneous systems."
 
 ROOT FOLDER = ./
 Set the GALOIS_ROOT to appropriate directory in your machine. (modify the CPU-Galois/common.mk file)

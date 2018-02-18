@@ -18,8 +18,8 @@ if(t.dist <level) t.updated=1;
 }
  reset1( Point   t,Graph  graph,int level){
 t.dist=t.dist-t.dist1;
-if(t.dist<level && t.updated==0)t.updated=1;
 if(t.updated==1)t.updated==2;
+if(t.dist<level && t.updated==0)t.updated=1;
 }
 
 void SSSP(char *name) {

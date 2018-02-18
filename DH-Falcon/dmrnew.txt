@@ -1,0 +1,294 @@
+#define MINANGLE 30
+#define PI  3.14 
+#define ALLOCMULTIPLE 2
+unsigned ALLOCFACTOR = 6;
+int ntria;
+int <GPU>changed,hchanged,<GPU>pnnodes,<GPU>pntriangles,<GPU>success;
+int <GPU>aborted;
+struct node{
+Point nodes[3];
+struct_rec node neighbours[3];
+
+Point neighedgestart[3];
+bool isbad,isdel;
+int obstuse;
+int owner;
+int dims;
+int index;
+};
+//function verify
+void verify(struct node<GPU> t,Graph<GPU>graph){
+
+if(t.isdel==false && t.isbad==true)changed=1;
+}
+
+//function adjacent
+int adjacent(Graph <GPU> graph,struct node <GPU> t1,struct node<GPU> t2){
+int ncommon=0,firstmatch=3;
+for(int i=0;i<3;i++){
+ for(j=0;i<3;j++){
+   if(t1.nodes[i]==t2.nodes[j] && t1.nodes[i]!=INVALID){
+       if(++ncommon==2)return firstmatch;
+       else firstmatch=i;
+    }
+}
+}
+}
+
+//function findneighbours
+void findneighbours(struct node <GPU> t ,Graph<GPU> graph){
+
+for(int i=0;i<graph.triangle.size;i++){
+int iirow=0;
+if(t!=graph.triangle[i]){
+ int commonedge=adjacent(graph,t, graph.triangle[i]);
+if(commonedge<3 &&  iirow<3){
+   t.neighbours[iirow]=graph.triangle[i];
+   t.neighedgestart[iirow]=t.point[commonedge];
+ ++iirow;
+}
+}
+}
+for(;iirow<3;++iirow){
+t.neighbour[iirow]=INVALID;
+ t.neighedgestart[iirow]=INVALID;
+ }
+
+}
+
+//function distance square
+
+ distanceSquare(Point<GPU> p1,Point<GPU> p2,Graph<GPU> graph){
+double
+double x1= p1.x-p2.x;
+double y1=p1.y-p2.y;
+double dsqr= x1*x1+y1*y1;
+return dsqr;
+}
+double distance(Point<GPU> one, Point <GPU> two, Graph<GPU>graph) {
+return sqrtf(distanceSquare(one, two, graph));
+}
+
+//function checkbad
+bool checkbad(struct node<GPU> t, Graph<GPU>graph){
+for(int i=0;i<3;i++){
+Point p1=t.nodes[i];
+Point p2=t.nodes[(i+1)%3];
+Point p3=t.nodes[(i+2)%s];
+double vax=p2.x-p1.x;
+double vay=p2.y-p1.y;
+double vbx=p3.x-p1.x;
+double vby=p3.y-p1.y;
+double dp=vax*vbx+vay*vby;
+if(dp<0) t.obstuse=i;
+else {
+   double dstsqrap1=distanceSquare(p2,p1,graph);
+   double dstsqrap2=distanceSquare(p3,p1,graph);
+   double c= dp* sqrt(dstsqrap1*dstsqrap2);
+   if(c> cos(MINANGLE*(22/180*7))) return true;
+}
+}
+}
+
+//function dinit
+
+void dinit(struct node <GPU> t,Graph<GPU> graph){
+
+t.obtuse=3;
+t.isbad=checkbad(t,graph);
+t.isdel=false;
+}
+
+
+struct cent {
+double centerx;
+double centery;
+};
+
+//getcenter function
+
+struct cent getcenter(struct node<GPU> t, Graph<GPU>graph){
+struct cent ce1;
+Point p1=t.nodes[0];
+Point p2=t.nodes[1];
+Point p3=t.nodes[2];
+if(t.dims==2){
+ce1.centerx=t.nodes[0].x+t.nodes[1].x;
+ce1.centery= t.nodes[0].y+t.nodes[1].y;
+return ce1;
+}
+double vax=p2.x-p1.x;
+double vay=p2.y-p1.y;
+double vbx=p3.x-p1.x;
+double vby=p3.y-p1.y;
+double xxlen=distance(p1,p2,graph);
+double yylen=distance(p1,p3,graph);
+double cosine=(vax*vbx+vay*vby)/(xxlen*yylen);
+double sinesq= 1-cosine*cosine;
+double plen=yylen/xxlen;
+double ss= plen *cosine;
+double tt=plen*sinesq;
+double wp=(plen-cosine)/(2*tt);
+double wb=0.5 -(wp*ss);
+ce1.centerx=p1.x*(1-wp-wb)+p2.x*wb+p3.x*wp;
+ce1.centery=p1.y*(1-wp-wb)+p2.y*wb+p3.y*wp;
+return ce1;
+}
+
+//function radius sqaure
+
+double radiusSqaure(Point<GPU>p1,Point<GPU>p2,Graph<GPU> graph){
+return distanceSquare(p1,p2,graph);
+
+
+}
+
+
+//function inCircumCircle
+bool inCircumCircle(Point <GPU> p1,struct node<GPU> t1,Graph<GPU>graph){
+struct cent ce1;
+ce1=getCenter(t1,graph);
+Point P1;
+P1.x=ce1.centerx;
+P1.y=ce1.centery;
+double dd= distanceSquare(P1,p1,graph);
+return dd<=radiusSqaure(P1,p1,graph);
+}
+
+//function drefine
+
+
+void drefine(struct node<GPU>t,Graph<GPU> graph){
+struct cent cent_new;
+Collection [ struct node ] pred,frontier,post,connection,conntria;
+struct node ceelem;
+ceelem=t;
+int cebot=graph.triangle[t].obtuse;
+int itr;
+
+while(cebot<3 && ++itr<50 ){
+
+ceelem=getOpposite(ceelem,graph);
+if(ceelem.index< graph.ntriangle){
+cebot=graph.triangle[ceelem].obtuse;
+}
+}
+if(ceelem.index>=graph.ntriangle || graph.triangle[ceelem].isdel){
+ceelem=t;
+cebot=graph.triangle[ceelem].obtuse;
+}
+cent_new=getCenter(ceelem,graph);
+pred.add(ceelem);
+frontier.add(ceelem);
+while(frontier.size>0){
+struct node curr=frontier.del();
+for(int i=0;i<3;i++){
+struct node next=graph.triangle[curr].neighbour[i];
+if(graph.triangle[next].index>=graph.ntriangle)break;
+if(graph.triangle[next].isdel)continue;
+if(next!=ceelem && inCircumCircle(next,ceelem,graph)){
+unsigned jj;
+for(jj=0;jj<pred.size;jj++){
+ if(pred[jj]==next)break;
+}
+if(jj==pred.size){
+pred.add(next);
+frontier.add(next);
+}
+}
+else {
+Point p1=graph.triangle[curr].neighedgestat[ii];
+Point p2=graph.triangle[curr].neighedgestat[(ii+1)%3];
+unsigned jj;
+for(jj=0;jj<connection.size;jj+=2){
+if(connection[jj]==p1 && connection[jj+1]==p2)break;
+}
+if(jj==connection.size){
+connection.add(p1);
+connection.add(p2);
+conntria.add(curr);
+conntria.add(next);
+}
+
+}
+
+}
+}
+if(getOwnership(iiper)!=true){
+lchanged = true;
+++aborted;
+continue;
+}
+++successfull;
+Point p0=graph.addPoint(cent_new.centerx,cent_new.centery);
+for (unsigned ii = 0; ii <connection.size; ii += 2) {
+Point p1=connection[ii];
+Point p2=connection[ii+1];
+struct node connsrc= conntria[ii];
+struct node conndst=conntria[ii+1];
+struct node newtri=graph.addTriangle(p0,p1,p2);
+int jj1;
+for (jj1 = 0; jj1 < pred.size; jj1+=1) {
+jj1++;
+if (pred[jj] == conndst)  break;
+}
+struct node newconn;
+if(jj==pred.size)newconn=conndst;
+else newconn=connsrc;
+int iinbr=0;
+graph.triangle[newtri].neighbour[0]=newconn;
+graph.triangle[newtri].neighedgestart[0]=p1;
+iinbr++;
+for (unsigned jj = 0; jj < post.size; ++jj) {
+int commonedgestart = adjacent(graph, newtri, post[jj]);
+if (commonedgestart < 3 && iinbr<3){
+graph.triangle[newtri].neighbour[iinbr]=post[jj];
+graph.triangle[newtri].neighedgestart[iinbr]=graph.triangle[post[jj]].nodes[commonedgestart];
+++iineighbor;
+//updateNeighbor(post[jj], newconn, newtri, neighbors, tnodes); 
+}
+}
+
+post.add( newtri);
+
+}
+unsigned jj;
+for (jj = 0; jj < pred.size; ++jj) {
+graph.triangle[jj].isdel=true;
+}
+
+
+
+for (unsigned ii = 0; ii < post.size; ++ii) {
+   struct node  tri = post[ii];
+    graph.triangle[tri].obtuse = 3;
+   graph.triangle[tri].isbad = checkbad(tri,graph);
+ lchanged |= isbad[tri];
+                 
+                }
+
+if (lchanged) {
+                *changed = true;
+        }
+}
+
+//function Main
+int main(){
+int ntria;
+Graph hgraph;
+hgraph.addProperty(triangle ,struct node[ntria]);
+hgraph.readNodes(argv[1]);
+hgraph.readTriangle(argv[1]);
+hgraph.getType() graph;
+graph=hgraph;
+foreach(t In graph.triangle)findneighbours(graph);
+do{
+changed=0;
+foreach(t In graph.triangle)countbad(t,graph);
+foreach(t In graph.triangle)drefine(t,graph);
+hchanged=changed;
+}while(hchanged);
+foreach(t In graph.triangle)verify(t,graph);
+}
+
+

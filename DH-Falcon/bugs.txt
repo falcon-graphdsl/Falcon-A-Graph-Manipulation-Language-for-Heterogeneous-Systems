@@ -1,0 +1,8 @@
+-----------------------------------------
+BUG FIXED
+CURR_CLUST_DEF has two fields
+1) updaterhs to store extra properties which comes on rhs of the assignment.
+2) updatecopies to store variables needs to be communicated. 
+3) whenever a global variable is assigned a value it needs to be communicated.
+--------------------------------------------------------------------------
+has to implement single by tonight.

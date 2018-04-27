@@ -47,39 +47,39 @@ TREE_ENUMCONST,
 TREE_STRING,
 TREE_BOOL
 };
-//stores inbuilt size of fileds/functions on each library  datatype.
+//stores inbuilt size of fileds and functions on each Falcon   datatypes.
 //array of fields and functions available in grammar.y
 enum SIZES { 
-	fieldgraph=7,
-	fieldedge=4,
-	fieldpoint=8,
-	fieldset=1,
-	fieldcollection=1,
-	fungraph=19,
-funedge=6,
-funpoint=8,
-funset=9,
-funcoll=9,
-libfun=5,
-iter=6
+	fieldgraph=7, //Graph
+	fieldedge=4,//Edge
+	fieldpoint=8,//Point
+	fieldset=1, //Set
+	fieldcollection=1,//Collection
+	fungraph=19,//Graph functions
+funedge=6,//Edge Functions
+funpoint=8, // Point functions
+funset=9,// Set functions
+funcoll=9, //Collection functions
+libfun=5,//libfunctions - MIN, MAX etc
+iter=6// ITERATORS
 };
   
 #define LIBTYPESIZE 8
 //stores library datatype of variable(dir_decl)
-enum LIBDATATYPE {
+enum LIBDATATYPE { //Falcon datatypes
 GRAPH_TYPE,//0
 EDGE_TYPE,//1
 POINT_TYPE,//2
 SET_TYPE,//3
 COLLECTION_TYPE,//4
-G_P_TYPE,//5
-E_P_TYPE,//6
-P_P_TYPE,//7
-ITERATOR_TYPE,//8
-LINT_TYPE//9
+G_P_TYPE,//5 - property added using addProperty()
+E_P_TYPE,//6 property added using addEdgeProperty()
+P_P_TYPE,//7property added using addPointProperty()
+ITERATOR_TYPE,//8 //Iterators - points, edges, nbrs etc
+LINT_TYPE//9 ??
 };
 #define TYPESIZE 16 
-enum DATATYPE {//stores datatype of variable / constant
+enum DATATYPE {//stores  C language datatype of variable / constant . 
 INT_TYPE,//0
 FLOAT_TYPE,//1
 SHORT_TYPE,//2
@@ -147,13 +147,13 @@ INNBRS_ITTYPE,//3.for point
 OUTNBRS_ITYPE,//4. outnbrs for point
 ITEMS_ITYPE,//5. items for colection,set
 ADDED_ITYPE,//6.for newly added property for graph
-NBRS1_ITTYPE,//7.for edge
-NBRS2_ITTYPE//8.for edge
+NBRS1_ITTYPE,//7.for edge - not implemented in this repository
+NBRS2_ITTYPE//8.for edge - not implemented in this repository
 };
 class tree_typedecl; //type declaration
 class tree_expr;//tree expression
 class proc_id;
-class dir_decl;//variable 
+class dir_decl;// Class which stores variable details
 struct funcall_list {
 char *name;
 struct funcall_list *next;
@@ -188,37 +188,37 @@ void print(tree_id *);
 int  find(tree_id *,tree_id *);
 };
 class tree_decl_stmt;
-struct extra_ppts{
-tree_typedecl *t1;
+struct extra_ppts{ // to store exra properties of graph added using 3 addProperty functions
+tree_typedecl *t1; 
 int val1, val2;
  tree_decl_stmt *dt1;
 dir_decl *var1,*var2,*parent,*var3;
 char *name;
-struct extra_ppts *next,*child;
-LIBDATATYPE  libdtype;
-int partfun;
+struct extra_ppts *next,*child; // it is a linked list
+LIBDATATYPE  libdtype;  //it can be P_P_TYPE, E_P_TYPE, G_P_TYPE
+int partfun; 
 };
 class dir_decl: public tree_node{//node for variable
 public:
  dir_decl *next;// next variable in list, used in direct_abstract_list prodcution
 dir_decl *prevv;//used when identifer declared using identifer_list production,ie variable declaration
-dir_decl *nextv;
-int dev_no;
-char *name,*dup_name;//name of variable
-char *extra_name;//used for properties/iteratos of graph for code generation
-char *extra_name1;//used for properties/iteratos of graph for code generation
-char *extra_name2;//used for properties/iteratos of graph for code generation
+dir_decl *nextv;//used when identifer declared using identifer_list production,ie variable declaration
+int dev_no; // Stores GPU number
+char *name,*dup_name;//name of variable. dup_name  for TARGET==5
+char *extra_name;//name used for properties/iteratos of graph for code generation
+char *extra_name1;//name used for properties/iteratos of graph for code generation
+char *extra_name2;//name used for properties/iteratos of graph for code generation
 char *extra_fun;
 char *update_fun;//partition update function 
-char *extra_readfun,*extra_readfun1;
+char *extra_readfun,*extra_readfun1; // to read extra property size of graphs
 struct extra_ppts *ppts;//extra properties of graph
 dir_decl *typelist;//type qualifier list in grammar type qualifier can have name CONST,VOLATILE etc
 dir_decl *parent;//parent will point to parent graph/point/edge
 bool sbrack_flag,ordered;//if in direct_abstract_list element has []
-bool clone,iflag,read,isparam,cpugpu,hetero;//
-int gpugpu;
-int it;//iterator type
-int forit;//foreach iterator
+bool clone,iflag,read,isparam,cpugpu,hetero;// flags to identify declared using getType() (clone), is parameter etc.
+int gpugpu; // used when CPU+GPU execution is there
+int it;// if iterator type
+int forit;//if foreach iterator
 dir_decl();
 int brack_flag;// ( ) brack in  function call
 bool open_brack; //brack open in ( declarator )
@@ -229,19 +229,20 @@ bool arr_flag;
 bool stat;//if STATIC keyword is there 
  tree_id *type_qual;
 tree_typedecl *tp1;
-tree_expr *assign;//assignment expression in direct_declarator
-tree_expr *rhs;//initializer for variable
-tree_expr *structexpr;//  struct filed with : structexpr
-tree_expr *idrhs;//enum constant value expression
+tree_expr *assign;//assignment expression in direct_declarator 
+tree_expr *rhs;//initializer for variable int  a = 25;
+tree_expr *structexpr;//  struct filed with : structexpr C syntax
+tree_expr *idrhs;//enum constant value expression 
 bool procd;//if it is a procedure declaration
-bool singleflag;
+bool singleflag; 
 tree_decl_stmt *params;//parameter declarations for functions
 tree_decl_stmt *parnames;//parameter names ,used for old type of function definition
 int ptrflag;//valid if ptr
 int ptrcnt;//how many pointers
 class symtable *stable;//pointer to symtable
-class libsymtable *libstable;//pointer to libsymtable, for library datatype
+class libsymtable *libstable;//pointer to libsymtable, for library/ Falcon  datatype
 class tree_typedecl *decltype;
+	/*be careful in dtype, libdtype , libdatatype in other files. Do not get confused.
 DATATYPE  dtype;//datatype of variable
 LIBDATATYPE  libdtype;//lib dataype of variable
 STORAGETYPE stype;//storage class extren ,auto etc
@@ -253,7 +254,7 @@ void printcodearray(int,char *);//genereate code for variable to file
 int  find(dir_decl *,dir_decl *);
 };
 
-enum EXPR_TYPE  {//expression type
+enum EXPR_TYPE  {//expression type C expersssions
 ADD,//0
 SUB,//1
 MUL,//2
@@ -310,7 +311,7 @@ CAST_EXPR,//52
 GET_TYPE//53
 };
 
-enum ASSIGN_TYPE{//assignment type
+enum ASSIGN_TYPE{//assignment type C syntax
 AASSIGN,// =
 AMUL_ASSIGN,// *=
 ADIV_ASSIGN,// /=
@@ -326,7 +327,7 @@ EMPTY_ASSIGN,// ;
 RRADD_ASSIGN,// REDUXSUM= . Falcon only
 RRMUL_ASSIGN// REDUXMUL=  .Falcon only
 };
-class assign_stmt :public tree_node{
+class assign_stmt :public tree_node{ 
 public:
 class  tree_expr *lhs;//lhs expression of assignment
 class tree_expr *rhs;//rhs expression of assignment
@@ -355,7 +356,7 @@ int pflag;//parameter
 int argflag;//argument
 int ptrflag;//pointe flag
 int kernel;//kernel. >0 means inside GPU kernel
-tree_expr *lhs;//lhs in expr syntax tree
+tree_expr *lhs;//lhs in expr syntax tree  
 tree_expr *rhs;//rhs in expr syntax tree
 assign_stmt *earr_list;//for mutli dimensional array expression
 tree_expr *next,*prev;//next prev in expression list
@@ -466,7 +467,7 @@ int foreachflag;
 int lineno,stmtno;//line no high level code and stament no
 class tree_expr *expr1,*expr2,*expr3,*expr4,*expr5;//used in statement like for,if etc
 class statement *f1,*f2,*f3;//used in statements like if,for ,if-then-else
-class statement *body;/**NOT USES?? **/
+class statement *body;/**NOT USED?? **/
 class tree_decl_stmt *stdecl;
 class assign_stmt *stassign;
 class iter_stmt   *stiter;

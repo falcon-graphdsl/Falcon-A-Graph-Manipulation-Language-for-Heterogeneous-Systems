@@ -12,7 +12,7 @@ The DSL codes in these folders will be compiled to C++/CUDA code and written in 
 
 There is a folder ROOT_FOLDER/bin. (ROOT_FOLDER=./)
 
-The C/C++ codes generated  will be compiled to binaries and written to bin folder under ROOT_FOLDER. under bin folder binaries, there are folders CPU, GPU anf CPU-Galois.
+The C/C++ codes generated  will be compiled to binaries and written to bin folder under ROOT_FOLDER. under bin folder meant for  binaries, there are folders CPU, GPU anf CPU-Galois.
 
 input graph can  be in binary .gr or edgelist format. conversion of edgelist to .gr can be done with code under the  folder utility in ROOT_FOLDER.
 

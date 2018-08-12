@@ -15,6 +15,12 @@ There is a folder ROOT_FOLDER/bin. (ROOT_FOLDER=./)
 The C/C++ codes generated  will be compiled to binaries and written to bin folder under ROOT_FOLDER. under bin folder binaries, there are folders CPU, GPU anf CPU-Galois.
 
 input graph can  be in binary .gr or edgelist format. conversion of edgelist to .gr can be done with code under the  folder utility in ROOT_FOLDER.
+
+Example :  - BFS GPU benchmark
+
+DSL codes in apps/gZGPU/bfs will be compiled by Falcon compiler.
+ Generated  CUDA code code will be moved to GPU/generated/bfs.
+ CUDA code compiled to bin/GPU/bfs as binaries. These are executable
 edgelist format has following syntax with edges sorted in ascending order of src vertex.
 npoints nedges (line 0)
 src dst weight (line 1 to nedges)

@@ -6,9 +6,9 @@ This work is part of the ACM TACO publication Falcon: A Graph Manipulation Langu
 
 ROOT FOLDER = ./
 
-There is a folder ROOT_FOLDER/apps. Under that folder there are folders CPU, GPU and CPU-Galois folders, which contains DSL codes for different benchmarks. 
+There is a folder ROOT_FOLDER/apps. Under apps folder there are folders CPU, GPU and CPU-Galois folders, which contains DSL codes for different benchmarks. 
 
-The DSL codes in these folders will be compiled to C++/CUDA code and written in CPU/GPU/CPU-Galois folders under ROOT_FOLDER (./).
+The DSL codes in these folders will be compiled to C++/CUDA code and written in  folder  named "genererated" under each of folders  CPU, GPU, CPU-Galois folders under ROOT_FOLDER (./).
 
 There is a folder ROOT_FOLDER/bin. (ROOT_FOLDER=./)
 
@@ -16,11 +16,14 @@ The C/C++ codes generated  will be compiled to binaries and written to bin folde
 
 input graph can  be in binary .gr or edgelist format. conversion of edgelist to .gr can be done with code under the  folder utility in ROOT_FOLDER.
 
-Example :  - BFS GPU benchmark
+Example :  - BFS GPU benchmark compilation.
 
-DSL codes in apps/gZGPU/bfs will be compiled by Falcon compiler.
- Generated  CUDA code code will be moved to GPU/generated/bfs.
- CUDA code compiled to bin/GPU/bfs as binaries. These are executable
+DSL codes in apps/GPU/bfs will be compiled by Falcon compiler.
+ Generated  CUDA code programs  will be moved to GPU/generated/bfs.
+ CUDA programs are  compiled to bin/GPU/bfs as binaries. These are executables.
+ 
+ 
+ 
 edgelist format has following syntax with edges sorted in ascending order of src vertex.
 npoints nedges (line 0)
 src dst weight (line 1 to nedges)

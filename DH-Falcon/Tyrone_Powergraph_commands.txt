@@ -1,6 +1,0 @@
-﻿mpiexec -host tc-node1,tc-node2 ~/PowerGraph-master/release/toolkits/graph_analytics/sssp --graph ~/r1M_PG.txt --format tsv --source 0
-
-/opt/mvapich2-1.8-r5423/gcc/bin/mpiexec -hosts tc-node1,tc-node2,tc-node3,tc-node4 ~/PowerGraph-master/release/toolkits/graph_analytics/sssp --graph ~/r1M_PG.txt --format tsv --source 0 --saveprefix x.txt
-
-nvcc  -c working_N_machine.cu  -I ~/openmpi/include/  -o gpu.o -arch=sm_20
-~/openmpi/bin/mpicxx -L /usr/local/cuda-5.0/lib64/ -lcudart gpu.o

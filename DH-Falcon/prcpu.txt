@@ -1,0 +1,42 @@
+int  changed=0, hchanged=0; 
+int  fchanged=0, fhchanged=0; 
+relaxgraph( Point   p,Graph  graph){
+int outs=p.getOutNeighbours();
+float sum= p.PR/outs;
+foreach(t In p.outnbrs) {
+ ADD(t.val,sum,changed);
+}
+}
+
+reset( Point   t,Graph  graph){
+t.PR=1/graph.npoints;
+t.val=0.0;
+}
+reset1( Point   t,Graph  graph,float d){
+float sum= d*t.val + (1-d)/graph.npoints;
+t.PR=sum;
+t.val=0.0;
+}
+void PageRank(char *name) {
+	Graph  hgraph;
+int cnt=0;
+hgraph.addPointProperty(PR,float);
+hgraph.addPointProperty(val,float);
+	hgraph.read(name);
+        float d=0.85;
+	foreach(t In hgraph.points)reset(t,hgraph);
+	while(cnt <100){ 
+	changed=0;
+	foreach(t In hgraph.points)relaxgraph(t,hgraph);
+	if(cnt <100) break; 
+       foreach(t In hgraph.points)reset1(t,hgraph, d);
+cnt++;
+}
+for(int i=0;i<hgraph.npoints;i++){
+printf("%f\n",hgraph.points[i].PR);
+}
+return;
+}
+int  main(int argc,char *argv[]){
+PageRank(argv[1]);
+}

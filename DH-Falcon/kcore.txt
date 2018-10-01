@@ -1,0 +1,49 @@
+int  changed=0, hchanged=0,level; 
+relaxgraph1( Point   p,Graph  graph,int level){
+p.dist1=false;
+foreach(t In p.outnbrs){      
+  t.dist1=false;
+}
+}
+relaxgraph( Point   p,Graph  graph,int level){
+foreach(t In p.outnbrs){      
+  ADD(t.dist1,1,changed);
+}
+}
+
+ reset( Point   t,Graph  graph,int level){
+t.dist=t.getOutNeighbours();
+t.updated=0;
+if(t.dist <level) t.updated=1;
+}
+ reset1( Point   t,Graph  graph,int level){
+t.dist=t.dist-t.dist1;
+if(t.updated==1)t.updated==2;
+if(t.dist<level && t.updated==0)t.updated=1;
+}
+
+void SSSP(char *name) {
+	Graph  hgraph;
+hgraph.addPointProperty(dist,int);
+hgraph.addPointProperty(dist1,int);
+hgraph.addPointProperty(updated,int);
+	hgraph.read(name);
+	foreach(t In hgraph.points)reset(t,hgraph);
+	while(lev < 100){ 
+	changed=0;
+	foreach(t In hgraph.points)(t.updated==1)relaxgraph(t,hgraph);
+	if(changed==0) break; 
+       foreach(t In hgraph.points)reset1(t,hgraph);
+	foreach(t In hgraph.points)relaxgraph1(t,hgraph);
+level++;
+}
+for(int i=0;i<hgraph.npoints;i++){
+printf("%d\n",hgraph.points[i].dist);
+}
+return;
+}
+int  main(int argc,char *argv[]){
+level=atoi(argv[2]);
+SSSP(argv[1]);
+
+}

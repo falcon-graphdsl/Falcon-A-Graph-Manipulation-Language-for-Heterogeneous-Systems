@@ -1,0 +1,29 @@
+int  changed; 
+int lev=0;
+void reset (Point  t, Graph  graph){
+t.dist=1234567890;
+}
+void BFS(Point  p,Graph  graph,int lev){
+int ch=0;
+foreach(t In p.outnbrs){
+if(t.dist>(p.dist+1)){
+t.dist=p.dist+1;
+changed=1;
+}
+}
+}
+int main(int argc, char *name[]){
+Graph hgraph;
+hgraph.addPointProperty(dist,int);
+hgraph.read(name[1]);
+foreach(t In hgraph.points)reset(t,hgraph);
+hgraph.points[0].dist=0;
+while(1){
+changed=0;
+foreach(t In hgraph.points)(t.dist==lev)BFS(t,hgraph,lev);
+if(changed==0)break;
+lev++;
+}
+for(int i=0;i<hgraph.npoints;i++)printf("%d\n",hgraph.points[i].dist);
+return;
+}

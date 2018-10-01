@@ -1,0 +1,32 @@
+int changed,hchanged;
+
+void relaxgraph(Point p, Graph graph,float d){
+
+float val=0.0;
+foreach (t In p.innbrs) {
+val=val+graph.dist[t];
+}
+graph.dist[p]=val *d +(1-d)/p.getOutDegree();
+
+
+}
+
+void reset (int p, Graph graph){
+graph.points[p].dist=1/hgraph.npoints;
+}
+int main(int argc, char *argv[]){
+Graph graph;
+graph.addPointProperty(float,dist);
+float d=0.85;
+int cnt=0;
+while(1){
+
+
+foreach(t In graph.points)relaxgraph(t, graph,d);
+cnt++;
+if(cnt==100)breal;
+
+}
+
+
+}

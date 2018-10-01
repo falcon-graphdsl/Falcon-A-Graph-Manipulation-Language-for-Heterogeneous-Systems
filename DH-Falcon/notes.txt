@@ -1,0 +1,12 @@
+variable DUPVAR used for codegeneration of changed variable for TARGET==5.
+DUPVAR=3 after codegeneration for all functions (for CPU, and GPU ) done in grammar.y
+
+DUPVAR==5 means normal code generation is done. duplicated variables has to be handled.
+
+DUPVAR==2 when code for duplicate variable declarations are generated.
+
+so for variables DUPVAR==1 means TARGET==5 and cuda kernel code generation is done.
+DUPVAR=1 when grammar.y exits.
+Set argument printing- argument variables are printed inside the dir_decl::printcode function.
+
+it is the last argument and printing happens after loop in dir_decl::printcode(). there checking needs to be done.
